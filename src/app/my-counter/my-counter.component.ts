@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Store, select } from '@ngrx/store';
-import {increment, decrement, reset} from '../counter.actions';
+import {increment, decrement, reset, loadCounter} from '../counter.actions';
 
 @Component({
   selector: 'app-my-counter',
@@ -12,10 +12,11 @@ export class MyCounterComponent implements OnInit {
   count$: Observable<number>;
 
   constructor(private store: Store<{count: number}>) { 
-    this.count$ = store.pipe(select('count'));
+    this.count$ = this.store.pipe(select('count'));
   }
-
-  ngOnInit() {
+  
+  ngOnInit(){
+    this.store.dispatch(loadCounter());
   }
 
   increment(){
